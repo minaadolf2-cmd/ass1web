@@ -1,69 +1,44 @@
-let userPin = "1234";
-let balance = 5000;
-let attempts = 0;
-let accountLocked = false;
+let customerName = "Mina";
+let productCategory = "Electronics";
+let productPrice = 10000;
+let quantity = 2;
+let couponCode = "SAVE10";
+let paymentMethod = "Visa";
 
-let enteredPin = prompt("Enter your PIN:");
+let subtotal = productPrice * quantity;
+let discount = 0;
 
-while (enteredPin !== userPin) {
-    attempts++;
-
-    if (attempts === 3) {
-        accountLocked = true;
-        console.log("Your account has been locked.");
-        break;
-    }
-
-    console.log("Incorrect PIN.");
-    enteredPin = prompt("Enter your PIN again:");
+if (productCategory === "Electronics") {
+    discount = subtotal * 0.10;
+} else if (productCategory === "Clothes") {
+    discount = subtotal * 0.15;
+} else if (productCategory === "Food") {
+    discount = subtotal * 0.05;
 }
 
-if (!accountLocked) {
+let total = subtotal - discount;
 
-    let operation = prompt("Choose an operation:\n1- Withdraw\n2- Deposit\n3- Check Balance\n4- Change PIN");
-
-    if (operation === "1") {
-
-        let amount = Number(prompt("Enter amount to withdraw:"));
-
-        if (amount <= balance) {
-            balance = balance - amount;
-            console.log("Withdrawal successful.");
-            console.log("Current Balance: " + balance);
-        } else {
-            console.log("Insufficient balance.");
-        }
-
-    } else if (operation === "2") {
-
-        let amount = Number(prompt("Enter amount to deposit:"));
-
-        if (amount > 0) {
-            balance = balance + amount;
-            console.log("Deposit successful.");
-            console.log("Current Balance: " + balance);
-        } else {
-            console.log("Invalid deposit amount.");
-        }
-
-    } else if (operation === "3") {
-
-        console.log("Current Balance: " + balance);
-
-    } else if (operation === "4") {
-
-        let newPin = prompt("Enter new 4-digit PIN:");
-
-        if (newPin.length === 4) {
-            userPin = newPin;
-            console.log("PIN changed successfully.");
-        } else {
-            console.log("PIN must contain exactly 4 digits.");
-        }
-
-    } else {
-
-        console.log("Invalid operation.");
-
-    }
+if (couponCode === "SAVE10") {
+    total = total - (total * 0.10);
 }
+
+if (paymentMethod === "Visa") {
+    total = total - (total * 0.05);
+}
+
+if (total < 0) {
+    total = 0;
+}
+
+let vat = total * 0.14;
+let finalPrice = total + vat;
+
+console.log("========== INVOICE ==========");
+console.log("Customer Name: " + customerName);
+console.log("Category: " + productCategory);
+console.log("Price: " + productPrice);
+console.log("Quantity: " + quantity);
+console.log("Subtotal: " + subtotal);
+console.log("VAT: " + vat);
+console.log("Final Price: " + finalPrice);
+console.log("=============================");
