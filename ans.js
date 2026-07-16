@@ -1,39 +1,27 @@
-function isValid(s) {
+function strStr(haystack, needle) {
 
-    let stack = [];
+    for (let i = 0; i <= haystack.length - needle.length; i++) {
 
-    for (let i = 0; i < s.length; i++) {
+        let found = true;
 
-        if (s[i] === "(" || s[i] === "[" || s[i] === "{") {
+        for (let j = 0; j < needle.length; j++) {
 
-            stack.push(s[i]);
-
-        } else {
-
-            let last = stack.pop();
-
-            if (s[i] === ")" && last !== "(") {
-                return false;
-            }
-
-            if (s[i] === "]" && last !== "[") {
-                return false;
-            }
-
-            if (s[i] === "}" && last !== "{") {
-                return false;
+            if (haystack[i + j] !== needle[j]) {
+                found = false;
+                break;
             }
 
         }
 
+        if (found) {
+            return i;
+        }
+
     }
 
-    return stack.length === 0;
+    return -1;
 
 }
 
-console.log(isValid("()"));
-console.log(isValid("()[]{}"));
-console.log(isValid("(]"));
-console.log(isValid("([)]"));
-console.log(isValid("{[]}"));
+console.log(strStr("sadbutsad", "sad"));
+console.log(strStr("leetcode", "leeto"));
